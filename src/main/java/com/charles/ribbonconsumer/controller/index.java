@@ -10,5 +10,6 @@ public class index {
 
     public static void main(String[] args){
         System.out.println("how to use the merge command!!!");
+        System.out.println("how to fix the merge conflicts!!!");
     }
 }
