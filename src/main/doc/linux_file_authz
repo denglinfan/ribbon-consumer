@@ -4,14 +4,50 @@
 	example:drwxr-xr-x   5 root        wheel  160  9 26  2017 dev
 		[  1     ]  [2][3]         [4 ]   [5] [    6    ] [7]
 
-   【1】.代表文件的类型与权限，其中第一列代表文件的类型
+   [1] .代表文件的类型与权限，其中第一列代表文件的类型
 	a.[d]---目录
 	  [-]---文件
 	  [l]---连接文件，表示该文件链接到另一个文件
 	  [b]---设备文件中的可供存储的接口设备
 	  [c]---设备文件中的串行端口设备，如鼠标/键盘
 	b.后列尾文件权限，三个一组分别代表文件所属者的权限，文件所属组的权限，其他人权限。其中[r]代表可读，[w]代表可写，[x]代表可执行（note:目录与文件的权限中的可读，可写，可执行的意义不完全一致，特别注意）
-		i.权限详细（暂略）
+		i.常用文件权限修改命令
+			a. chgrp:改变文件所属用户组(chgrp [-R] groupname dirname/filename)
+				[-R]:进行递归进行修改，同子目录下的所有文件/目录都会更改
+				groupname必须是在/etc/group中存在的组名，否则会报错
+			b. chown:改变文件所有者(chown [-R] username dirname/filename)
+				[-R]:递归进行修改，痛子目录下的所有文件/目录都会更改
+				username必须是在/etc/passwd中存在的用户名
+			   (chown [-R] username:groupname dirname/filename)
+				同时更改文件和目录的所有者和所属组
+			   (chown [-R] .groupname dirname/filename)
+				通过chown修改文件的所属组，通过使用[.]来进行修改
+			c. chmod:改变文件/目录读写执行权限
+				i.数字类型改变权限(r=4,w=2,x=1)---chmod [-R] xyz dirname/filename
+					x:所有者权限(7=rwx,6=rw-,5=r-x,4=r--,3=-wx,2=-w-,1=--x,0=---)
+					y:所属组权限
+					z:其他用户权限
+				ii.符号类型改变文件权限(u,g,o分别代表user,group,other三种身份，a=表示所有身份)
+					可以通过[+],[-],[=]分别加入，减去，设置某权限(chmod u=?,g=?,o=? dirname/filename)
+					chmod u=rwx,go=rw dirname/filename
+					chmod a+w dirname/filename
+					chmod a-x dirname/filename
+					chmod u-r,g-w dirname/filename
+
+		2.目录和文件权限的意义
+			a.文件：
+				i.r(read):可读取文件的内容
+				ii.w(write):可编辑(修改，新增，删除文件的内容),但无权限删除文件
+				iii.x(execute):文件可被系统执行的权限
+
+			b.目录：
+				i.r(read content in directory):可以通过ls命令读取目录结构列表
+				ii.w(modify contents of dirextory):可更改目录结构(不可轻易给该权限)
+					新建新的文件或目录
+					删除已经存在的文件与目录(与该文件或目录的本身权限无关)
+					重命名已经存在的文件或目录名
+					转移该目录内的文件或目录位置
+				iii.x(access directory):用户可对该目录进行相应的操作
 
     [2]	.表示多少文件名链接到此文件（暂略）
     [3] .表示此文件的所属者账号
