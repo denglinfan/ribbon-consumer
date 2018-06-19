@@ -55,4 +55,27 @@
 
 	8. od [-t TYPE] filename(非纯文本文件内容查看)
 		参数：
-			-t: 
+			-t:后面可以接各种“类型(Type)”的输出，如：
+				a : 使用默认的字符来输出
+				c : 使用ASCLL字符来输出
+				d[size]: 利用十进制来输出数据，每个整数占用size byte
+				f[size]: 利用浮点数来输出数据，每个数占用size byte
+				o[size]: 利用八进制来输出数据，每个整数占用size byte
+				x[size]: 利用十六进制来输出数据，每个整数占用size byte
+
+二. 修改文件时间或创建空文件
+	1. 一个文件在linux中，存在三个主要的变动的时间：
+		modification time(mtime):当文件更新其内容时，会更新这个时间记录
+		status time(ctime):当文件状态更新时，此时间会相应的更新。如修改文件权限与属性时
+		access time(atime):当文件内容被使用，会更新此时间。如当使用cat读取文件内容时
+
+		注：通过ls -l显示的默认是mtime，若想查看另外两个时间是可使用ls -l --time=atime/ctime进行查看
+
+	2. 使用touch命令修改文件时间或创建空文件
+		touch [-acdmt] filename
+		参数说明：
+			-a: 仅修改文件访问时间
+			-c: 仅修改文件的时间，若该文件不存在也不会创建一个新的空文件
+			-d: 后面可以接想要更改的日期而不是使用系统时间，也可以使用--date=“日期或时间”,如touch -d "2 days ago" bashrc
+			-m: 仅修改mtime
+			-t: 后面可以接想要修改的日期或时间而不使用系统时间，格式为[yyMMddhhmm],如touch -t 0709150202bashrc
