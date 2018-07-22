@@ -1,4 +1,4 @@
-一. 针对目录的相关操作
+一 针对目录的相关操作
 	1. 几个比较特殊的目录：
 		a. .:代表当前层目录
 		b. ..:代表上一层目录
@@ -92,3 +92,26 @@
 	5. 命令获取路径的目录名与文件名
 		basename /etc/sysconfig/network:获取文件名称，即network
 		dirname /etc/sysconfig/network:获取目录名称，即/etc/sysconfig
+
+	6.脚本文件名的查询:which
+		which [-a] command
+			a: 将所有由PATH目录中可以找出来的命令均列出来，而不止第一个被找到的文件名称
+
+	7.文件名的查找
+		whereis：寻找特定文件
+			whereis [-busm] filename/dirname
+			参数说明：
+				b：只找二进制格式的文件
+				m：只找在说明文件manual路径下的文件
+				s：只找source源文件
+				u：查找不在上述三个选项当中的其他特殊文件
+
+		locate：
+			locate [-ra] keyword
+			参数说明：
+				r：忽略大小写的差异
+				a：后面可直接接正则表达式的显示方式
+		注意：whereis和locate寻找的文件数据均来自/var/lib/mlocate中，而不是直接去硬盘中查找数据，所以速度很快。但是这种方式可能会查询不到一些已经被删除或新增的文件。此时可以通过使用updatedb手动的更新数据库（updatedb根据/etc/updatedb.conf的设置去查找系统硬盘内的文件名，并更新/var/lib/mlocate内的数据库文件）
+
+		find: 直接查询硬盘文件数据，所以会比较耗时
+			find [PATH] [option] [action]
